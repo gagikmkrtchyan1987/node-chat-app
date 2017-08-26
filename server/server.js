@@ -11,6 +11,19 @@ io.on('connection', (socket)=>{
 socket.on('disconnect', ()=>{
 		console.log('User disconnected')
 	})
+
+
+socket.on('createMessage', (message)=>{
+	console.log('Create Message', message)
+})
+
+socket.emit('newMessage', {
+			from:'Gagik',
+			text:'Manchester',
+			completedAt:123456
+		})
+
+
 });
 
 
