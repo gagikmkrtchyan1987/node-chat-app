@@ -24,7 +24,7 @@ describe('generateLocationMessage', ()=>{
 	var longitude=44.4991029;
 	var url=`https://www.google.com/maps?q=40.1791857,44.4991029`
 	var message=generateLocationMessage(from, latitude, longitude);
-	 expect(message.createdAt).toBeA('string');
+	 expect(message.createdAt).toBeA('number');
 	expect(message).toInclude({
 		from:from,
 		url:url
