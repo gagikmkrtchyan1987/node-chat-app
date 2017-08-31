@@ -1,6 +1,15 @@
  	var socket = io()
  	socket.on('connect', function() {
- 	    console.log('User connected')
+ 	    var params=$.deparam(window.location.search)
+      socket.emit('join', params, function(err){
+        if(err){
+          alert(err)
+          window.location.href="/"
+        }
+        else{
+          console.log('No error ')
+        }
+      })
  	})
 
    function scrollToBottom(){
@@ -31,6 +40,14 @@
  	  // li.text(`${message.from}: ${message.text} ${formattedTime}`)
  	  // $('#messages-area').append(li)
  	})
+
+socket.on('updateUserList', function(users){
+var ol=$('<ol></ol>')
+users.forEach(function(user){
+  ol.append($('<li></li>').text(user))
+})
+$('#users').html(ol)
+})
 
  socket.on('newLocationMessage', function(message){
   var formattedTime=moment(message.createdAt).format('h:mm a')
