@@ -31,15 +31,21 @@ io.on('connection', (socket) => {
     })
 
     socket.on('createMessage', (message, callback) => {
-        console.log('Create Message', message)
-        io.emit('newMessage', generateMessage(message.from, message.text))
+        var user=users.getUser(socket.id)
+        if(user&& isRealString(message.text)){
+             io.to(user.room).emit('newMessage', generateMessage(user.name, message.text))
+        }
+       
         callback('This came from server')
     })
 
 
     socket.on('createLocation', (coords) => {
-        console.log('Create Location', coords)
-        io.emit('newLocationMessage', generateLocationMessage('Administrator: ', coords.latitude, coords.longitude))
+        var user=users.getUser(socket.id)
+         if(user){
+            io.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name, coords.latitude, coords.longitude))
+        }
+        
 
     })
 
